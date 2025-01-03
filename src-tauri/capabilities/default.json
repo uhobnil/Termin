@@ -1,0 +1,56 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "fs:default",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [
+        {
+          "path": "$APPDATA/*"
+        }
+      ]
+    },
+    "core:default",
+    "shell:allow-open",
+    "notification:default",
+    "notification:allow-notify",
+    "autostart:allow-enable",
+    "autostart:allow-disable",
+    "autostart:allow-is-enabled",
+    "store:allow-get",
+    "store:allow-set",
+    "store:allow-save",
+    "store:allow-load",
+    "store:allow-get-store",
+    "core:window:default",
+    "core:window:allow-close",
+    "core:window:allow-create",
+    "core:window:allow-is-minimized",
+    "core:window:allow-is-maximized",
+    "core:window:allow-is-fullscreen",
+    "core:window:allow-start-dragging",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-center",
+    "core:window:allow-set-size",
+    "core:window:allow-set-position",
+    "core:window:allow-set-focus",
+    "core:window:allow-minimize",
+    "core:window:allow-destroy",
+    "core:window:allow-set-skip-taskbar",
+    "core:window:allow-set-always-on-top",
+    "core:window:allow-maximize",
+    "core:webview:allow-create-webview-window",
+    "core:webview:allow-webview-close",
+    "core:app:allow-default-window-icon",
+    "core:path:allow-join",
+    "core:path:allow-dirname",
+    "core:path:allow-resolve",
+    "core:path:allow-resolve-directory",
+    "sql:default",
+    "sql:allow-execute"
+  ]
+}

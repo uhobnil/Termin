@@ -1,4 +1,4 @@
-<template> 
+<template>
   <n-button class="create-btn" type="primary" @click="showModal = true" circle>
     <template #icon>
       <n-icon><Add /></n-icon>
@@ -79,25 +79,35 @@
     </template>
     <template #2>
       <div class="flex-1 p-2">
-        <p class="text-xl pl-4">{{ dayjs(viewDate).format("YYYY-MM-DD") }}</p>
-        <div v-for="s in dateSchedules" :key="s.id" class="flex items-center justify-between w-full text-sm cursor-pointer p-2 rounded-lg" v-if="dateSchedules.length > 0">
+        <p class="text-xl">{{ dayjs(viewDate).format("YYYY-MM-DD") }}</p>
+        <div
+          v-for="s in dateSchedules"
+          :key="s.id"
+          class="flex items-center justify-between w-full text-sm cursor-pointer p-2 rounded-lg"
+          v-if="dateSchedules.length > 0"
+        >
           <div>{{ s.content }}</div>
           <div class="schedule-actions">
-            <n-button size="small" @click="handleEdit(s)">
+            <n-button quaternary circle size="small" @click="handleEdit(s)">
               <template #icon>
                 <n-icon><Edit /></n-icon>
               </template>
             </n-button>
-            <n-button size="small" type="error" @click="handleDelete(s.id)">
+            <n-button
+              quaternary
+              circle
+              size="small"
+              type="error"
+              @click="handleDelete(s.id)"
+            >
               <template #icon>
                 <n-icon><Delete /></n-icon>
               </template>
             </n-button>
           </div>
         </div>
-        <n-empty v-else  class="flex-1 justify-center">
-          <template #icon>
-          </template>
+        <n-empty v-else class="flex-1 justify-center">
+          <template #icon> </template>
         </n-empty>
       </div>
     </template>
@@ -169,7 +179,7 @@ async function onPositiveClick() {
       remind: model.value.remind,
       repeat: model.value.repeat,
     };
-    
+
     if (editingId.value) {
       await invoke("update_schedule", {
         id: editingId.value,
@@ -180,7 +190,7 @@ async function onPositiveClick() {
       await invoke("create_schedule", { data });
       message.success("Create Success!");
     }
-    
+
     showModal.value = false;
     editingId.value = null;
     model.value = {
@@ -189,7 +199,10 @@ async function onPositiveClick() {
       remind: false,
       date: null,
     };
-    await getSchedulesByMonth(dayjs(value.value).get("year"), dayjs(value.value).get("month") + 1);
+    await getSchedulesByMonth(
+      dayjs(value.value).get("year"),
+      dayjs(value.value).get("month") + 1
+    );
     updateViewSchedules();
   } catch (error) {
     message.error(error);
@@ -222,11 +235,13 @@ function handlePanelChange({ year, month }) {
 }
 
 function updateViewSchedules() {
-  dateSchedules.value = viewDate.value ? schedules.value.filter((item) => {
-    return dayjs(item.date * 1000)
-      .startOf("day")
-      .isSame(dayjs(viewDate.value));
-  }) : [];
+  dateSchedules.value = viewDate.value
+    ? schedules.value.filter((item) => {
+        return dayjs(item.date * 1000)
+          .startOf("day")
+          .isSame(dayjs(viewDate.value));
+      })
+    : [];
 }
 
 function handleUpdateValue(timestamp, info) {
@@ -236,7 +251,6 @@ function handleUpdateValue(timestamp, info) {
 function isDateDisabled(timestamp) {
   return false;
 }
-
 
 function handleEdit(schedule) {
   editingId.value = schedule.id;
@@ -253,7 +267,10 @@ async function handleDelete(id) {
   try {
     await invoke("delete_schedule", { id });
     message.success("Delete Success!");
-    await getSchedulesByMonth(dayjs(value.value).get("year"), dayjs(value.value).get("month") + 1);
+    await getSchedulesByMonth(
+      dayjs(value.value).get("year"),
+      dayjs(value.value).get("month") + 1
+    );
     updateViewSchedules();
   } catch (error) {
     message.error(error);
@@ -262,7 +279,7 @@ async function handleDelete(id) {
 
 onMounted(() => {
   getSchedulesByMonth(dayjs().get("year"), dayjs().get("month") + 1);
-})
+});
 </script>
 
 <style scoped>

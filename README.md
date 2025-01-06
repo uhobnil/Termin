@@ -15,8 +15,14 @@ A cross-platform desktop reminder application built with Tauri. It runs in the s
 - 💻 System Integration
 - 🎯 User Interface
 - 🌈 Cross-platform
-  - Windows
+  - windows
   - macOS
+  - linux
+
+## Screenshots
+
+![Main Window](./screenshots/main.png)
+![Create Schedule](./screenshots/create.png)
 
 ## Key Features Implementation
 

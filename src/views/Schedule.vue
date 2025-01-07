@@ -11,7 +11,7 @@
   </n-button>
   <n-message-provider>
     <n-modal
-      v-model:show="showModal"
+      :show="showModal"
       :mask-closable="false"
       :close-on-esc="false"
       :show-icon="false"
@@ -30,13 +30,16 @@
         label-placement="left"
         label-width="auto"
         require-mark-placement="right-hanging"
-        :size="size"
         :style="{
           maxWidth: '640px',
         }"
       >
         <n-form-item label="Date" path="date">
-          <n-date-picker v-model:value="model.date" type="datetime" />
+          <n-date-picker
+            v-model:value="model.date"
+            type="datetime"
+            input-readonly
+          />
         </n-form-item>
         <n-form-item label="Content" path="content">
           <n-input
@@ -140,6 +143,23 @@ const model = ref({
   remind: false,
   date: null,
 });
+const rules = ref({
+  content: {
+    required: true,
+    trigger: ["input", "blur"],
+    message: "Please input content",
+  },
+  date: {
+    required: true,
+    trigger: ["change", "blur"],
+    validator: (rule, value) => {
+      if (!value) {
+        return new Error("Please select date");
+      }
+      return true;
+    },
+  },
+});
 
 const generalOptions = [
   {
@@ -178,6 +198,14 @@ function onNegativeClick() {
 }
 async function onPositiveClick() {
   try {
+    const validate = await formRef.value
+      .validate()
+      .then((o) => true)
+      .catch((e) => false);
+    if (!validate) {
+      return;
+    }
+
     const data = {
       content: model.value.content,
       date: dayjs(model.value.date).unix(),

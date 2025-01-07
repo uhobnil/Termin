@@ -1,5 +1,10 @@
 <template>
-  <n-button class="create-btn" type="primary" @click="showModal = true" circle>
+  <n-button
+    class="fixed right-4 bottom-4 z-1000"
+    type="primary"
+    @click="showModal = true"
+    circle
+  >
     <template #icon>
       <n-icon><Add /></n-icon>
     </template>
@@ -59,9 +64,9 @@
   </n-message-provider>
   <n-split :size="0.8">
     <template #1>
-      <div class="calendar-container">
+      <div class="h-full flex flex-col p-2 box-border">
         <n-calendar
-          class="calendar"
+          class="flex-1 overflow-auto"
           v-model:value="value"
           #="{ year, month, date }"
           :is-date-disabled="isDateDisabled"
@@ -83,11 +88,11 @@
         <div
           v-for="s in dateSchedules"
           :key="s.id"
-          class="flex items-center justify-between w-full text-sm cursor-pointer p-2 rounded-lg"
+          class="flex items-center justify-between w-full text-sm cursor-pointer rounded-lg"
           v-if="dateSchedules.length > 0"
         >
-          <div>{{ s.content }}</div>
-          <div class="schedule-actions">
+          <div class="truncate">{{ s.content }}</div>
+          <div class="flex gap-2">
             <n-button quaternary circle size="small" @click="handleEdit(s)">
               <template #icon>
                 <n-icon><Edit /></n-icon>
@@ -281,39 +286,3 @@ onMounted(() => {
   getSchedulesByMonth(dayjs().get("year"), dayjs().get("month") + 1);
 });
 </script>
-
-<style scoped>
-.create-btn {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1000;
-}
-
-.calendar-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.calendar {
-  flex: 1;
-  overflow: auto;
-}
-
-.schedule-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #eee;
-}
-
-.schedule-actions {
-  display: flex;
-  gap: 8px;
-}
-</style>

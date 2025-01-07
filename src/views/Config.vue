@@ -1,5 +1,5 @@
 <template>
-  <div class="config-container p-15px">
+  <div class="p-2">
     <n-form
       ref="formRef"
       inline
@@ -20,7 +20,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { load } from "@tauri-apps/plugin-store";
-import { enable, disable } from '@tauri-apps/plugin-autostart';
+import { enable, disable } from "@tauri-apps/plugin-autostart";
 const formRef = ref(null);
 const formValue = ref({
   autoStart: true,
@@ -42,9 +42,3 @@ onMounted(async () => {
   formValue.value.autoStart = await store.get("autoStart");
 });
 </script>
-
-<style scoped>
-/* .config-container {
-  padding: 15px;
-} */
-</style>

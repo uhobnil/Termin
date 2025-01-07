@@ -60,7 +60,7 @@ onMounted(async () => {
 
 <template>
   <provider>
-    <n-layout has-sider>
+    <n-layout has-sider class="h-screen">
       <n-layout-sider
         bordered
         :collapsed="collapsed"
